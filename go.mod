@@ -1,3 +1,3 @@
-module ref-val
+module go-performance
 
 go 1.19
