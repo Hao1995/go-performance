@@ -1,6 +1,7 @@
+# Go Performance
 
-
-# Struct Case
+## Various Type Test
+### Struct Case
 
 `LargeStruct v.s. *LargeStruct`
 
@@ -18,7 +19,7 @@ PASS
 ok      ref-val/structcase      2.583s
 ```
 
-# Array Case
+### Array Case
 
 `[]int v.s. []*int`
 
@@ -36,8 +37,9 @@ PASS
 ok      ref-val/refarr  15.520s
 ```
 
-# Convert Array to Another Structure Case
+### Convert Array to Another Structure Case
 
+`[]int -> []Tmp v.s. []*int -> []*Tmp`
 
 ```
 go test -bench=. ./refarrconv/ -benchmem -count=1 -benchtime=100x
@@ -53,6 +55,23 @@ PASS
 ok      ref-val/refarrconv      16.730s
 ```
 
+### Convert Array to Another Structure Case
+
+`map[int]int v.s. map[int]*int`
+
+```
+go test -bench=. ./mapcase/ -benchmem -count=1 -benchtime=100x
+```
+
+```
+goos: darwin
+goarch: arm64
+pkg: go-performance/mapcase
+BenchmarkPassByValue-10              100          11658263 ns/op        641728556 B/op         2 allocs/op
+BenchmarkPassByReference-10          100          38284591 ns/op        641728576 B/op         2 allocs/op
+PASS
+ok      go-performance/mapcase  5.954s
+```
 
 # Show Graph
 
