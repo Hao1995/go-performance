@@ -8,8 +8,7 @@ func PassByValue(s []int) {
 
 func PassByReference(s []*int) {
 	for i := range s {
-		j := new(int)
-		*j = i
-		s[i] = j
+		val := i
+		s[i] = &val
 	}
 }

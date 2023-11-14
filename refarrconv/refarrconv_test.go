@@ -6,7 +6,7 @@ import (
 
 func BenchmarkPassByValue(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		arr := make([]int, 1<<24)
+		arr := make([]int, 1)
 		PassByValue(arr)
 	}
 }
@@ -23,7 +23,7 @@ func TestPassByValue(t *testing.T) {
 
 func BenchmarkPassByReference(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		arr := make([]*int, 1<<24)
+		arr := make([]*int, 1)
 		PassByReference(arr)
 	}
 }

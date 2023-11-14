@@ -3,7 +3,7 @@
 ## Various Type Test
 ### Struct Case
 
-`LargeStruct v.s. *LargeStruct`
+`Person v.s. *Person`
 
 ```
 go test -bench=. ./structcase/ -benchmem -count=1 -benchtime=100x
@@ -12,11 +12,11 @@ go test -bench=. ./structcase/ -benchmem -count=1 -benchtime=100x
 ```
 goos: darwin
 goarch: arm64
-pkg: ref-val/structcase
-BenchmarkPassByValue-10              100          14327898 ns/op        268435479 B/op         2 allocs/op
-BenchmarkPassByReference-10          100           6789992 ns/op        134217731 B/op         1 allocs/op
+pkg: go-performance/structcase
+BenchmarkPassByValue-10              100                 1.670 ns/op           0 B/op          0 allocs/op
+BenchmarkPassByReference-10          100                 2.500 ns/op           0 B/op          0 allocs/op
 PASS
-ok      ref-val/structcase      2.583s
+ok      go-performance/structcase       0.316s
 ```
 
 ### Array Case
@@ -80,6 +80,13 @@ Set up server...
 ```
 go tool pprof -http :8080 output/cpu.out
 go tool pprof -http :8081 output/mem.out
+```
+
+Enter pprof mode
+```
+go tool pprof output/cpu.out
+(pprof) web
+(pprof) text
 ```
 
 Examples

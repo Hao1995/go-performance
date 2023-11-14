@@ -1,17 +1,19 @@
 package structcase
 
-type LargeStruct struct {
-	Data [1 << 24]int // 16MB of integers
+type Person struct {
+	Name  string
+	Age   int
+	Email string
 }
 
-func PassByValue(s LargeStruct) {
-	for i := range s.Data {
-		s.Data[i] = i
-	}
+func PassByValue(s Person) {
+	s.Name = "John"
+	s.Age = 1
+	s.Email = "test@example.com"
 }
 
-func PassByReference(s *LargeStruct) {
-	for i := range s.Data {
-		s.Data[i] = i
-	}
+func PassByReference(s *Person) {
+	s.Name = "John"
+	s.Age = 1
+	s.Email = "test@example.com"
 }
