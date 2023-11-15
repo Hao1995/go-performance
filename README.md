@@ -13,10 +13,10 @@ go test -bench=. ./structcase/ -benchmem -count=1 -benchtime=100x
 goos: darwin
 goarch: arm64
 pkg: go-performance/structcase
-BenchmarkPassByValue-10              100                 1.670 ns/op           0 B/op          0 allocs/op
-BenchmarkPassByReference-10          100                 2.500 ns/op           0 B/op          0 allocs/op
+BenchmarkPassByValue-10              100                 2.080 ns/op           0 B/op          0 allocs/op
+BenchmarkPassByReference-10          100                 3.330 ns/op           0 B/op          0 allocs/op
 PASS
-ok      go-performance/structcase       0.316s
+ok      go-performance/structcase       0.300s
 ```
 
 ### Array Case
