@@ -110,6 +110,42 @@ PASS
 ok      go-performance/arrptrmutitime   0.546s
 ```
 
+### Clean Architecture Case
+
+`[]Person v.s. []*Person`
+
+```
+go test -bench=. ./cleanarchcase/ -benchmem -count=1 -benchtime=100x
+```
+
+```
+goos: darwin
+goarch: arm64
+pkg: go-performance/cleanarchcase
+BenchmarkValue-10            100              8683 ns/op            2092 B/op        102 allocs/op
+BenchmarkPointer-10          100              9363 ns/op            2252 B/op        122 allocs/op
+PASS
+ok      go-performance/cleanarchcase    0.277s
+```
+
+### Clean Architecture With Edit Input Case
+
+`[]Person v.s. []*Person`
+
+```
+go test -bench=. ./cleanarcheditsrccase/ -benchmem -count=1 -benchtime=100x
+```
+
+```
+goos: darwin
+goarch: arm64
+pkg: go-performance/cleanarcheditsrccase
+BenchmarkValue-10            100              8902 ns/op            1772 B/op        101 allocs/op
+BenchmarkPointer-10          100              8792 ns/op            1775 B/op        101 allocs/op
+PASS
+ok      go-performance/cleanarcheditsrccase     0.411s
+```
+
 ### Map Case
 
 `map[int]int v.s. map[int]*int`
