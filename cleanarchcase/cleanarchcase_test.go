@@ -5,6 +5,11 @@ import (
 	"testing"
 )
 
+var (
+	valData = valAdapter()
+	ptrData = ptrAdapter()
+)
+
 func BenchmarkValue(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		Value()
@@ -24,9 +29,8 @@ func BenchmarkValueUsecase(b *testing.B) {
 }
 
 func BenchmarkValueHandler(b *testing.B) {
-	data := valUsecase()
 	for i := 0; i < b.N; i++ {
-		valHandler(data)
+		valHandler(valAdapter())
 	}
 }
 
@@ -58,9 +62,8 @@ func BenchmarkPointerUsecase(b *testing.B) {
 }
 
 func BenchmarkPointerHandler(b *testing.B) {
-	data := ptrUsecase()
 	for i := 0; i < b.N; i++ {
-		ptrHandler(data)
+		ptrHandler(ptrData)
 	}
 }
 

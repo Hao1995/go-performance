@@ -122,16 +122,16 @@ go test -bench=. ./cleanarchcase/ -benchmem -count=1 -benchtime=100x
 goos: darwin
 goarch: arm64
 pkg: go-performance/cleanarchcase
-BenchmarkValue-10                    100              5069 ns/op            2092 B/op        102 allocs/op
-BenchmarkValueAdapter-10             100              1542 ns/op             655 B/op         21 allocs/op
-BenchmarkValueUsecase-10             100              2625 ns/op             975 B/op         41 allocs/op
-BenchmarkValueHandler-10             100              2020 ns/op            1142 B/op         61 allocs/op
-BenchmarkPointer-10                  100              5240 ns/op            2252 B/op        122 allocs/op
-BenchmarkPointerAdapter-10           100              2893 ns/op             815 B/op         41 allocs/op
-BenchmarkPointerUsecase-10           100              3096 ns/op            1132 B/op         61 allocs/op
-BenchmarkPointerHandler-10           100              2112 ns/op            1144 B/op         61 allocs/op
+BenchmarkValue-10                    100              8915 ns/op            2092 B/op        102 allocs/op
+BenchmarkValueAdapter-10             100              2698 ns/op             652 B/op         21 allocs/op
+BenchmarkValueUsecase-10             100              5164 ns/op             972 B/op         41 allocs/op
+BenchmarkValueHandler-10             100              6230 ns/op            1772 B/op         82 allocs/op
+BenchmarkPointer-10                  100              8405 ns/op            2255 B/op        122 allocs/op
+BenchmarkPointerAdapter-10           100              3175 ns/op             815 B/op         41 allocs/op
+BenchmarkPointerUsecase-10           100              4932 ns/op            1132 B/op         61 allocs/op
+BenchmarkPointerHandler-10           100              3391 ns/op            1135 B/op         61 allocs/op
 PASS
-ok      go-performance/cleanarchcase    0.281s
+ok      go-performance/cleanarchcase    0.450s
 ```
 
 ### Clean Architecture With Edit Input Case
