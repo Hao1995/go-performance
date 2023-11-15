@@ -55,7 +55,62 @@ PASS
 ok      ref-val/refarrconv      16.730s
 ```
 
-### Convert Array to Another Structure Case
+### Convert Array to Another Structure by Private Func returning Pointer Case
+
+`func xxx(i int) *Tmp`
+`[]int -> []Tmp v.s. []*int -> []*Tmp`
+
+```
+go test -bench=. ./convbyfuncptr/ -benchmem -count=1 -benchtime=100x
+```
+
+```
+goos: darwin
+goarch: arm64
+pkg: go-performance/convbyfuncptr
+BenchmarkPassByValue-10              100                39.59 ns/op            8 B/op          1 allocs/op
+BenchmarkPassByReference-10          100                66.25 ns/op           16 B/op          2 allocs/op
+PASS
+ok      go-performance/convbyfuncptr    0.377s
+```
+
+### Convert Slice to Slice by Pointer Case
+
+`[]int -> []*Tmp v.s. []*int -> []*Tmp`
+
+```
+go test -bench=. ./convtoarrptr/ -benchmem -count=1 -benchtime=100x
+```
+
+```
+goos: darwin
+goarch: arm64
+pkg: go-performance/convtoarrptr
+BenchmarkPassByValue-10              100                64.17 ns/op           16 B/op          2 allocs/op
+BenchmarkPassByReference-10          100                82.08 ns/op           16 B/op          2 allocs/op
+PASS
+ok      go-performance/convtoarrptr     0.415s
+```
+
+### Slice by Value v.s. Slice by Pointer
+
+`[]Tmp v.s. []*Tmp`
+
+```
+go test -bench=. ./arrptrmutitime/ -benchmem -count=1 -benchtime=100x
+```
+
+```
+goos: darwin
+goarch: arm64
+pkg: go-performance/arrptrmutitime
+BenchmarkValue-10            100           1261520 ns/op          314519 B/op      39488 allocs/op
+BenchmarkPointer-10          100           1110082 ns/op          314439 B/op      39488 allocs/op
+PASS
+ok      go-performance/arrptrmutitime   0.546s
+```
+
+### Map Case
 
 `map[int]int v.s. map[int]*int`
 
