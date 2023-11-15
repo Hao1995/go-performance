@@ -28,6 +28,24 @@ func BenchmarkValue(b *testing.B) {
 	}
 }
 
+func BenchmarkValueAdapter(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		valAdapter(valueData)
+	}
+}
+
+func BenchmarkValueUsecase(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		valUsecase(valueData)
+	}
+}
+
+func BenchmarkValueHandler(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		valHandler(valueData)
+	}
+}
+
 func TestValue(t *testing.T) {
 	res := Value(valueData)
 	for i, item := range res {
@@ -40,6 +58,24 @@ func TestValue(t *testing.T) {
 func BenchmarkPointer(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		Pointer(pointerData)
+	}
+}
+
+func BenchmarkPointerAdapter(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		ptrAdapter(pointerData)
+	}
+}
+
+func BenchmarkPointerUsecase(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		ptrUsecase(pointerData)
+	}
+}
+
+func BenchmarkPointerHandler(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		ptrHandler(pointerData)
 	}
 }
 
