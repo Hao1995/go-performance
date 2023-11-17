@@ -1,13 +1,13 @@
 # Clean Architecture + GRPC
 
-## 031 - Slice + GET
+## GET Slice
 
 Simulate the query data flow in the clean architecture + GRPC.
 Val: `[]Person -> []*ProtoPerson`
 Ptr: `[]*Person -> []*ProtoPerson`
 
 ```
-go test -bench=. ./clean_architecture_grpc/031/ -benchmem -count=1 -benchtime=100x
+go test -bench=. ./clean_architecture_grpc/get_slice/ -benchmem -count=1 -benchtime=100x
 ```
 
 ```
@@ -21,14 +21,14 @@ BenchmarkPointerUsecase-10           100              4932 ns/op            1132
 BenchmarkPointerHandler-10           100              3391 ns/op            1135 B/op         61 allocs/op
 ```
 
-## 032 - Slice + Create
+## Create Slice
 
 Simulate the create data flow in the clean architecture + GRPC.
 Val: `[]*InputPerson -> []Person -> []*ProtoPerson`
 Ptr: `[]*InputPerson -> []*Person -> []*ProtoPerson`
 
 ```
-go test -bench=. ./clean_architecture_grpc/032/ -benchmem -count=1 -benchtime=100x
+go test -bench=. ./clean_architecture_grpc/create_slice/ -benchmem -count=1 -benchtime=100x
 ```
 
 ```

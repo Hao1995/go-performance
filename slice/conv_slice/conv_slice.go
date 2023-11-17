@@ -1,4 +1,4 @@
-package perf
+package convslice
 
 type People struct {
 	Name  string

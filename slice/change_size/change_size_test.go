@@ -1,4 +1,4 @@
-package perf
+package changesize
 
 import (
 	"testing"

@@ -1,4 +1,4 @@
-package perf
+package getslice
 
 import (
 	"fmt"
@@ -41,7 +41,6 @@ func TestValue(t *testing.T) {
 			t.Errorf("Expected %s, got %s", fmt.Sprintf("proto-usecase-%d", i), item.Name)
 		}
 	}
-	t.Error("TestValue")
 }
 
 func BenchmarkPointer(b *testing.B) {
@@ -75,5 +74,4 @@ func TestPointer(t *testing.T) {
 			t.Errorf("Expected %s, got %s", fmt.Sprintf("proto-usecase-%d", i), item.Name)
 		}
 	}
-	t.Error("TestPointer")
 }

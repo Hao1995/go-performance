@@ -1,4 +1,4 @@
-package perf
+package createslice
 
 const (
 	DATA_SIZE = 20

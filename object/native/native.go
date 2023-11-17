@@ -1,4 +1,4 @@
-package perf
+package native
 
 type Person struct {
 	Name  string

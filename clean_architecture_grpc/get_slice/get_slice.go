@@ -1,4 +1,4 @@
-package perf
+package getslice
 
 import "fmt"
 
@@ -31,7 +31,6 @@ func valHandler(data []Person) []*ProtoPerson {
 
 func valUsecase() []Person {
 	data := valAdapter()
-	fmt.Printf("value, usecase. data address=%p\n", &data)
 	for i := range data {
 		data[i].Name = fmt.Sprintf("usecase-%d", i)
 	}
@@ -43,7 +42,6 @@ func valAdapter() []Person {
 	for i := 0; i < DATA_SIZE; i++ {
 		data[i] = Person{Name: fmt.Sprintf("adapter-%d", i)}
 	}
-	fmt.Printf("value, adapter. data address=%p\n", &data)
 	return data
 }
 
@@ -64,7 +62,6 @@ func ptrHandler(data []*Person) []*ProtoPerson {
 
 func ptrUsecase() []*Person {
 	data := ptrAdapter()
-	fmt.Printf("pointer, usecase. data address=%p\n", &data)
 	for i := range data {
 		data[i].Name = fmt.Sprintf("usecase-%d", i)
 	}
@@ -76,6 +73,5 @@ func ptrAdapter() []*Person {
 	for i := 0; i < DATA_SIZE; i++ {
 		data[i] = &Person{Name: fmt.Sprintf("adapter-%d", i)}
 	}
-	fmt.Printf("pointer, adapter. data address=%p\n", &data)
 	return data
 }

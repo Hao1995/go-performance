@@ -1,24 +1,15 @@
-package perf
+package native
 
 import (
 	"testing"
 )
 
-var (
-	valPerson = Person{
-		Name:  "before edit",
-		Age:   -1,
-		Email: "before.edit@example.com",
-	}
-
-	ptrPerson = &Person{
-		Name:  "before edit",
-		Age:   -1,
-		Email: "before.edit@example.com",
-	}
-)
-
 func BenchmarkPassByValue(b *testing.B) {
+	valPerson := Person{
+		Name:  "before edit",
+		Age:   -1,
+		Email: "before.edit@example.com",
+	}
 	for i := 0; i < b.N; i++ {
 		PassByValue(valPerson)
 	}
@@ -44,6 +35,11 @@ func TestPassByValue(t *testing.T) {
 }
 
 func BenchmarkPassByReference(b *testing.B) {
+	ptrPerson := &Person{
+		Name:  "before edit",
+		Age:   -1,
+		Email: "before.edit@example.com",
+	}
 	for i := 0; i < b.N; i++ {
 		PassByReference(ptrPerson)
 	}

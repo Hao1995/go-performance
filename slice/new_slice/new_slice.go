@@ -1,4 +1,4 @@
-package perf
+package newslice
 
 type Person struct {
 	Name  string

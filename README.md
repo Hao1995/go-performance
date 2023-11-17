@@ -1,8 +1,13 @@
 # Go Performance
 Benchmark the various cases by using value, pointer.
 
-# Show Graph
+## Test List
+[Object](/object/README.md)
+[Slice](/slice/README.md)
+[Map](/map/README.md)
+[Clean Architecture + GRPC](/clean_architecture_grpc/README.md)
 
+# Show Graph
 Add this flags ` -cpuprofile=output/cpu.out -memprofile=output/mem.out` to the origin command.
 Set up server...
 ```

@@ -1,4 +1,4 @@
-package perf
+package native
 
 import (
 	"testing"

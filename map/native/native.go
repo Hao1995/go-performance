@@ -1,4 +1,4 @@
-package perf
+package native
 
 func PassByValue(s map[int]int) {
 	res := make(map[int]int, len(s))

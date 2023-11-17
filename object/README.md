@@ -1,11 +1,11 @@
 
 # Object
 
-## 001 - Change Value
+## Native
 Edit person object: `Person v.s. *Person`
 
 ```
-go test -bench=. ./object/001/ -benchmem -count=1 -benchtime=100x
+go test -bench=. ./object/native/ -benchmem -count=1 -benchtime=100x
 ```
 
 ```
