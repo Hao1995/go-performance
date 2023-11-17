@@ -1,4 +1,4 @@
-package structcase
+package perf
 
 type Person struct {
 	Name  string
@@ -8,14 +8,14 @@ type Person struct {
 
 func PassByValue(s Person) Person {
 	return Person{
-		Name:  "John",
-		Age:   1,
-		Email: "test@example.com",
+		Name:  "after edit",
+		Age:   100,
+		Email: "after.edit@example.com",
 	}
 }
 
 func PassByReference(s *Person) {
-	s.Name = "John"
-	s.Age = 1
-	s.Email = "test@example.com"
+	s.Name = "after edit"
+	s.Age = 100
+	s.Email = "after.edit@example.com"
 }

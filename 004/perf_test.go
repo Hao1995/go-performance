@@ -1,4 +1,4 @@
-package cleanarchcas
+package perf
 
 import (
 	"fmt"
@@ -30,7 +30,7 @@ func BenchmarkValueUsecase(b *testing.B) {
 
 func BenchmarkValueHandler(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		valHandler(valAdapter())
+		valHandler(valData)
 	}
 }
 
@@ -41,6 +41,7 @@ func TestValue(t *testing.T) {
 			t.Errorf("Expected %s, got %s", fmt.Sprintf("proto-usecase-%d", i), item.Name)
 		}
 	}
+	t.Error("TestValue")
 }
 
 func BenchmarkPointer(b *testing.B) {
@@ -74,4 +75,5 @@ func TestPointer(t *testing.T) {
 			t.Errorf("Expected %s, got %s", fmt.Sprintf("proto-usecase-%d", i), item.Name)
 		}
 	}
+	t.Error("TestPointer")
 }

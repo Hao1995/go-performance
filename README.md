@@ -1,127 +1,73 @@
 # Go Performance
 
-## Various Type Test
-### Struct Case
+## Test List
 
-`Person v.s. *Person`
+### 001 - Object
+Edit person object: `Person v.s. *Person`
 
 ```
-go test -bench=. ./structcase/ -benchmem -count=1 -benchtime=100x
+go test -bench=. ./001/ -benchmem -count=1 -benchtime=100x
 ```
 
 ```
 goos: darwin
 goarch: arm64
-pkg: go-performance/structcase
-BenchmarkPassByValue-10              100                 2.080 ns/op           0 B/op          0 allocs/op
-BenchmarkPassByReference-10          100                 3.330 ns/op           0 B/op          0 allocs/op
+pkg: go-performance/001
+BenchmarkPassByValue-10              100                 1.250 ns/op           0 B/op          0 allocs/op
+BenchmarkPassByReference-10          100                 2.080 ns/op           0 B/op          0 allocs/op
 PASS
-ok      go-performance/structcase       0.300s
+ok      go-performance/001      0.100s
 ```
 
-### Array Case
-
-`[]int v.s. []*int`
+### 002 - Slice
+Edit the slice content: `[]People v.s. []People`
 
 ```
-go test -bench=. ./refarr/ -benchmem -count=1 -benchtime=100x
+go test -bench=. ./002/ -benchmem -count=1 -benchtime=100x
 ```
 
 ```
 goos: darwin
 goarch: arm64
-pkg: ref-val/refarr
-BenchmarkPassByValue-10              100           7452440 ns/op        134217925 B/op         1 allocs/op
-BenchmarkPassByReference-10          100         142818432 ns/op        268436020 B/op  16777217 allocs/op
+pkg: go-performance/002
+BenchmarkPassByValue-10              100                51.66 ns/op            0 B/op          0 allocs/op
+BenchmarkPassByReference-10          100                42.50 ns/op            0 B/op          0 allocs/op
 PASS
-ok      ref-val/refarr  15.520s
+ok      go-performance/002      0.346s
 ```
 
-### Convert Array to Another Structure Case
+### 003 - New Slice
 
-`[]int -> []Tmp v.s. []*int -> []*Tmp`
+Convert people slice to member slice: `[]People -> []Member v.s. []*People -> []*Member`
 
 ```
-go test -bench=. ./refarrconv/ -benchmem -count=1 -benchtime=100x
+go test -bench=. ./003/ -benchmem -count=1 -benchtime=100x
 ```
 
 ```
 goos: darwin
 goarch: arm64
-pkg: ref-val/refarrconv
-BenchmarkPassByValue-10              100           9628510 ns/op        268435656 B/op         2 allocs/op
-BenchmarkPassByReference-10          100         153143861 ns/op        402653785 B/op  16777218 allocs/op
+pkg: go-performance/003
+BenchmarkPassByValue-10              100               142.1 ns/op           896 B/op          1 allocs/op
+BenchmarkPassByReference-10          100               774.6 ns/op          1120 B/op         21 allocs/op
 PASS
-ok      ref-val/refarrconv      16.730s
+ok      go-performance/003      0.452s
 ```
 
-### Convert Array to Another Structure by Private Func returning Pointer Case
+### 004 - Clean Architecture + GRPC + Slice + GET
 
-`func xxx(i int) *Tmp`
-`[]int -> []Tmp v.s. []*int -> []*Tmp`
-
-```
-go test -bench=. ./convbyfuncptr/ -benchmem -count=1 -benchtime=100x
-```
+Simulate the query data flow in the clean architecture + GRPC.
+Val: `[]Person -> []*ProtoPerson`
+Ptr: `[]*Person -> []*ProtoPerson`
 
 ```
-goos: darwin
-goarch: arm64
-pkg: go-performance/convbyfuncptr
-BenchmarkPassByValue-10              100                39.59 ns/op            8 B/op          1 allocs/op
-BenchmarkPassByReference-10          100                66.25 ns/op           16 B/op          2 allocs/op
-PASS
-ok      go-performance/convbyfuncptr    0.377s
-```
-
-### Convert Slice to Slice by Pointer Case
-
-`[]int -> []*Tmp v.s. []*int -> []*Tmp`
-
-```
-go test -bench=. ./convtoarrptr/ -benchmem -count=1 -benchtime=100x
+go test -bench=. ./004/ -benchmem -count=1 -benchtime=100x
 ```
 
 ```
 goos: darwin
 goarch: arm64
-pkg: go-performance/convtoarrptr
-BenchmarkPassByValue-10              100                64.17 ns/op           16 B/op          2 allocs/op
-BenchmarkPassByReference-10          100                82.08 ns/op           16 B/op          2 allocs/op
-PASS
-ok      go-performance/convtoarrptr     0.415s
-```
-
-### Slice by Value v.s. Slice by Pointer
-
-`[]Tmp v.s. []*Tmp`
-
-```
-go test -bench=. ./arrptrmutitime/ -benchmem -count=1 -benchtime=100x
-```
-
-```
-goos: darwin
-goarch: arm64
-pkg: go-performance/arrptrmutitime
-BenchmarkValue-10            100           1261520 ns/op          314519 B/op      39488 allocs/op
-BenchmarkPointer-10          100           1110082 ns/op          314439 B/op      39488 allocs/op
-PASS
-ok      go-performance/arrptrmutitime   0.546s
-```
-
-### Clean Architecture Case
-
-`[]Person v.s. []*Person`
-
-```
-go test -bench=. ./cleanarchcase/ -benchmem -count=1 -benchtime=100x
-```
-
-```
-goos: darwin
-goarch: arm64
-pkg: go-performance/cleanarchcase
+pkg: go-performance/004
 BenchmarkValue-10                    100              8915 ns/op            2092 B/op        102 allocs/op
 BenchmarkValueAdapter-10             100              2698 ns/op             652 B/op         21 allocs/op
 BenchmarkValueUsecase-10             100              5164 ns/op             972 B/op         41 allocs/op
@@ -131,31 +77,55 @@ BenchmarkPointerAdapter-10           100              3175 ns/op             815
 BenchmarkPointerUsecase-10           100              4932 ns/op            1132 B/op         61 allocs/op
 BenchmarkPointerHandler-10           100              3391 ns/op            1135 B/op         61 allocs/op
 PASS
-ok      go-performance/cleanarchcase    0.450s
+ok      go-performance/004    0.450s
 ```
 
-### Clean Architecture With Edit Input Case
+### 005 - Clean Architecture + GRPC + Slice + Create
 
-`[]Person v.s. []*Person`
+Simulate the create data flow in the clean architecture + GRPC.
+Val: `[]*InputPerson -> []Person -> []*ProtoPerson`
+Ptr: `[]*InputPerson -> []*Person -> []*ProtoPerson`
 
 ```
-go test -bench=. ./cleanarcheditsrccase/ -benchmem -count=1 -benchtime=100x
+go test -bench=. ./005/ -benchmem -count=1 -benchtime=100x
 ```
 
 ```
 goos: darwin
 goarch: arm64
-pkg: go-performance/cleanarcheditsrccase
-BenchmarkValue-10                    100             10808 ns/op            1775 B/op        101 allocs/op
-BenchmarkValueAdapter-10             100              2603 ns/op             335 B/op         20 allocs/op
-BenchmarkValueUsecase-10             100              5025 ns/op             655 B/op         40 allocs/op
-BenchmarkValueHandler-10             100              3712 ns/op            1132 B/op         61 allocs/op
-BenchmarkPointer-10                  100              8645 ns/op            1775 B/op        101 allocs/op
-BenchmarkPointerAdapter-10           100              2538 ns/op             335 B/op         20 allocs/op
-BenchmarkPointerUsecase-10           100              4118 ns/op             652 B/op         40 allocs/op
-BenchmarkPointerHandler-10           100              3321 ns/op            1135 B/op         61 allocs/op
+pkg: go-performance/005
+BenchmarkValue-10                    100              3588 ns/op            4440 B/op        102 allocs/op
+BenchmarkValueUsecase-10             100              8015 ns/op           34313 B/op         40 allocs/op
+BenchmarkValueAdapter-10             100              1473 ns/op            8639 B/op         20 allocs/op
+BenchmarkPointer-10                  100              5018 ns/op            6586 B/op        162 allocs/op
+BenchmarkPointerUsecase-10           100              6508 ns/op           36243 B/op         80 allocs/op
+BenchmarkPointerAdapter-10           100              2250 ns/op            9608 B/op         40 allocs/op
 PASS
-ok      go-performance/cleanarcheditsrccase     0.339s
+ok      go-performance/005      0.305s
+```
+
+### Clean Architecture With Return New Slice Case
+
+`[]Person v.s. []*Person`
+
+```
+go test -bench=. ./cleanarchcopycase/ -benchmem -count=1 -benchtime=100x
+```
+
+```
+goos: darwin
+goarch: arm64
+pkg: go-performance/cleanarchcopycase
+BenchmarkValue-10                    100              9682 ns/op            2412 B/op        103 allocs/op
+BenchmarkValueAdapter-10             100              3892 ns/op             652 B/op         21 allocs/op
+BenchmarkValueUsecase-10             100              5790 ns/op            1295 B/op         42 allocs/op
+BenchmarkValueHandler-10             100              3786 ns/op            1132 B/op         61 allocs/op
+BenchmarkPointer-10                  100              8935 ns/op            1775 B/op        101 allocs/op
+BenchmarkPointerAdapter-10           100              2352 ns/op             332 B/op         20 allocs/op
+BenchmarkPointerUsecase-10           100              4430 ns/op             655 B/op         40 allocs/op
+BenchmarkPointerHandler-10           100              3542 ns/op            1135 B/op         61 allocs/op
+PASS
+ok      go-performance/cleanarchcopycase        0.340s
 ```
 
 ### Map Case
