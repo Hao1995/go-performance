@@ -5,15 +5,11 @@ import (
 )
 
 const (
-	DATA_SIZE = 20
+	DATA_SIZE = 1e6
 )
 
-var (
-	valPeople = make([]People, DATA_SIZE)
-	ptrPeople = make([]*People, DATA_SIZE)
-)
-
-func init() {
+func BenchmarkPassByValue(b *testing.B) {
+	valPeople := make([]People, DATA_SIZE)
 	for i := range valPeople {
 		valPeople[i] = People{
 			Name:  "before edit",
@@ -21,17 +17,6 @@ func init() {
 			Email: "before.edit@example.com",
 		}
 	}
-
-	for i := range ptrPeople {
-		ptrPeople[i] = &People{
-			Name:  "before edit",
-			Age:   -1,
-			Email: "after.edit@example.com",
-		}
-	}
-}
-
-func BenchmarkPassByValue(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		PassByValue(valPeople)
 	}
@@ -61,6 +46,14 @@ func TestPassByValue(t *testing.T) {
 }
 
 func BenchmarkPassByReference(b *testing.B) {
+	ptrPeople := make([]*People, DATA_SIZE)
+	for i := range ptrPeople {
+		ptrPeople[i] = &People{
+			Name:  "before edit",
+			Age:   -1,
+			Email: "after.edit@example.com",
+		}
+	}
 	for i := 0; i < b.N; i++ {
 		PassByReference(ptrPeople)
 	}

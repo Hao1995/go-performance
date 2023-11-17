@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	DATA_SIZE = 20
+	DATA_SIZE = 1e6
 )
 
 func BenchmarkPassByValue(b *testing.B) {
