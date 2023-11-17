@@ -1,79 +1,39 @@
 package perf
 
 import (
-	"fmt"
 	"testing"
 )
 
-var (
-	valData = valAdapter()
-	ptrData = ptrAdapter()
-)
-
-func BenchmarkValue(b *testing.B) {
+func BenchmarkPassByValue(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		Value()
+		mapData := make(map[int]int, 1<<24)
+		PassByValue(mapData)
 	}
 }
 
-func BenchmarkValueAdapter(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		valAdapter()
-	}
-}
-
-func BenchmarkValueUsecase(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		valUsecase()
-	}
-}
-
-func BenchmarkValueHandler(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		valHandler(valData)
-	}
-}
-
-func TestValue(t *testing.T) {
-	res := Value()
-	for i, item := range res {
-		if item.Name != fmt.Sprintf("proto-usecase-%d", i) {
-			t.Errorf("Expected %s, got %s", fmt.Sprintf("proto-usecase-%d", i), item.Name)
+func TestPassByValue(t *testing.T) {
+	mapData := make(map[int]int, 1<<24)
+	PassByValue(mapData)
+	for i := range mapData {
+		if mapData[i] != i {
+			t.Errorf("Expected %d, got %d", i, mapData[i])
 		}
 	}
-	t.Error("TestValue")
 }
 
-func BenchmarkPointer(b *testing.B) {
+func BenchmarkPassByReference(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		Pointer()
+		mapData := make(map[int]*int, 1<<24)
+		PassByReference(mapData)
 	}
 }
 
-func BenchmarkPointerAdapter(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		ptrAdapter()
-	}
-}
-
-func BenchmarkPointerUsecase(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		ptrUsecase()
-	}
-}
-
-func BenchmarkPointerHandler(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		ptrHandler(ptrData)
-	}
-}
-
-func TestPointer(t *testing.T) {
-	res := Pointer()
-	for i, item := range res {
-		if item.Name != fmt.Sprintf("proto-usecase-%d", i) {
-			t.Errorf("Expected %s, got %s", fmt.Sprintf("proto-usecase-%d", i), item.Name)
+func TestPassByReference(t *testing.T) {
+	mapData := make(map[int]*int, 1<<24)
+	PassByReference(mapData)
+	for i := range mapData {
+		if *mapData[i] != i {
+			t.Errorf("Expected %d, got %d", i, *mapData[i])
 		}
 	}
-	t.Error("TestPointer")
 }

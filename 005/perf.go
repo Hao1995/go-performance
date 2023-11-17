@@ -1,112 +1,81 @@
 package perf
 
+import "fmt"
+
 const (
 	DATA_SIZE = 20
 )
 
-type InputPerson struct {
-	Name  string
-	Age   int
-	Email string
-}
-
 type Person struct {
-	Name  string
-	Age   int
-	Email string
+	Name string
 }
 
 type ProtoPerson struct {
-	Name  string
-	Age   int
-	Email string
+	Name string
 }
 
-func Value(input []*InputPerson) []*ProtoPerson {
-	var people []Person = make([]Person, len(input))
-	for i := range input {
-		people[i] = Person{
-			Name:  "domain-" + input[i].Name,
-			Age:   input[i].Age,
-			Email: input[i].Email,
-		}
-	}
-
-	valUsecase(people)
-
-	output := make([]*ProtoPerson, len(people))
-	for i := range people {
-		output[i] = &ProtoPerson{
-			Name:  "proto-" + people[i].Name,
-			Age:   people[i].Age,
-			Email: people[i].Email,
-		}
-	}
-	return output
+func Value() []*ProtoPerson {
+	data := valUsecase()
+	return valHandler(data)
 }
 
-func valUsecase(data []Person) {
+func valHandler(data []Person) []*ProtoPerson {
+	protoData := make([]*ProtoPerson, len(data))
 	for i := range data {
-		data[i] = Person{
-			Name:  "usecase-" + data[i].Name,
-			Age:   data[i].Age,
-			Email: data[i].Email,
+		protoData[i] = &ProtoPerson{
+			Name: fmt.Sprintf("proto-%s", data[i].Name),
 		}
 	}
-	valAdapter(data)
+	return protoData
 }
 
-func valAdapter(data []Person) {
+func valUsecase() []Person {
+	data := valAdapter()
+	fmt.Printf("value, usecase. data address=%p\n", &data)
 	for i := range data {
-		data[i] = Person{
-			Name:  "adapter-" + data[i].Name,
-			Age:   data[i].Age,
-			Email: data[i].Email,
-		}
+		data[i].Name = fmt.Sprintf("usecase-%d", i)
 	}
+	return data
 }
 
-func Pointer(input []*InputPerson) []*ProtoPerson {
-	var people []*Person = make([]*Person, len(input))
-	for i := range input {
-		people[i] = &Person{
-			Name:  "domain-" + input[i].Name,
-			Age:   input[i].Age,
-			Email: input[i].Email,
-		}
+func valAdapter() []Person {
+	data := make([]Person, DATA_SIZE)
+	for i := 0; i < DATA_SIZE; i++ {
+		data[i] = Person{Name: fmt.Sprintf("adapter-%d", i)}
 	}
-
-	ptrUsecase(people)
-
-	output := make([]*ProtoPerson, len(people))
-	for i := range people {
-		output[i] = &ProtoPerson{
-			Name:  "proto-" + people[i].Name,
-			Age:   people[i].Age,
-			Email: people[i].Email,
-		}
-	}
-
-	return output
+	fmt.Printf("value, adapter. data address=%p\n", &data)
+	return data
 }
 
-func ptrUsecase(data []*Person) {
+func Pointer() []*ProtoPerson {
+	data := ptrUsecase()
+	return ptrHandler(data)
+}
+
+func ptrHandler(data []*Person) []*ProtoPerson {
+	protoData := make([]*ProtoPerson, len(data))
 	for i := range data {
-		data[i] = &Person{
-			Name:  "usecase-" + data[i].Name,
-			Age:   data[i].Age,
-			Email: data[i].Email,
+		protoData[i] = &ProtoPerson{
+			Name: fmt.Sprintf("proto-%s", data[i].Name),
 		}
 	}
-	ptrAdapter(data)
+	return protoData
 }
 
-func ptrAdapter(data []*Person) {
+func ptrUsecase() []*Person {
+	data := ptrAdapter()
+	fmt.Printf("pointer, usecase. data address=%p\n", &data)
 	for i := range data {
-		data[i] = &Person{
-			Name:  "adapter-" + data[i].Name,
-			Age:   data[i].Age,
-			Email: data[i].Email,
-		}
+		data[i].Name = fmt.Sprintf("usecase-%d", i)
 	}
+	return data
+}
+
+func ptrAdapter() []*Person {
+	data := make([]*Person, DATA_SIZE)
+	for i := 0; i < DATA_SIZE; i++ {
+		data[i] = &Person{Name: fmt.Sprintf("adapter-%d", i)}
+	}
+	fmt.Printf("pointer, adapter. data address=%p\n", &data)
+	return data
 }

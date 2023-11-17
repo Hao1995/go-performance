@@ -5,132 +5,75 @@ import (
 	"testing"
 )
 
+var (
+	valData = valAdapter()
+	ptrData = ptrAdapter()
+)
+
 func BenchmarkValue(b *testing.B) {
-	var input []*InputPerson = make([]*InputPerson, DATA_SIZE)
-	for i := 0; i < DATA_SIZE; i++ {
-		input[i] = &InputPerson{
-			Name:  fmt.Sprintf("init-%d", i),
-			Age:   -1,
-			Email: "test@example.com",
-		}
-	}
-
 	for i := 0; i < b.N; i++ {
-		Value(input)
-	}
-}
-
-func BenchmarkValueUsecase(b *testing.B) {
-	data := make([]Person, DATA_SIZE)
-	for i := range data {
-		data[i] = Person{
-			Name:  fmt.Sprintf("test-%d", i),
-			Age:   -1,
-			Email: "test@example.com",
-		}
-	}
-	for i := 0; i < b.N; i++ {
-		valUsecase(data)
+		Value()
 	}
 }
 
 func BenchmarkValueAdapter(b *testing.B) {
-	data := make([]Person, DATA_SIZE)
-	for i := range data {
-		data[i] = Person{
-			Name:  fmt.Sprintf("test-%d", i),
-			Age:   -1,
-			Email: "test@example.com",
-		}
-	}
 	for i := 0; i < b.N; i++ {
-		valAdapter(data)
+		valAdapter()
+	}
+}
+
+func BenchmarkValueUsecase(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		valUsecase()
+	}
+}
+
+func BenchmarkValueHandler(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		valHandler(valData)
 	}
 }
 
 func TestValue(t *testing.T) {
-	input := make([]*InputPerson, DATA_SIZE)
-	for i := range input {
-		input[i] = &InputPerson{
-			Name:  fmt.Sprintf("input-%d", i),
-			Age:   -1,
-			Email: "test@example.com",
-		}
-	}
-
-	res := Value(input)
+	res := Value()
 	for i, item := range res {
-		expected := ProtoPerson{
-			Name:  fmt.Sprintf("proto-adapter-usecase-domain-input-%d", i),
-			Age:   -1,
-			Email: "test@example.com",
-		}
-		if *item != expected {
-			t.Errorf("Expected %+v, got %+v", expected, *item)
+		if item.Name != fmt.Sprintf("proto-usecase-%d", i) {
+			t.Errorf("Expected %s, got %s", fmt.Sprintf("proto-usecase-%d", i), item.Name)
 		}
 	}
+	t.Error("TestValue")
 }
 
 func BenchmarkPointer(b *testing.B) {
-	input := make([]*InputPerson, DATA_SIZE)
-	for i := range input {
-		input[i] = &InputPerson{
-			Name:  fmt.Sprintf("input-%d", i),
-			Age:   -1,
-			Email: "test@example.com",
-		}
-	}
 	for i := 0; i < b.N; i++ {
-		Pointer(input)
-	}
-}
-
-func BenchmarkPointerUsecase(b *testing.B) {
-	data := make([]*Person, DATA_SIZE)
-	for i := range data {
-		data[i] = &Person{
-			Name:  fmt.Sprintf("test-%d", i),
-			Age:   -1,
-			Email: "test@example.com",
-		}
-	}
-	for i := 0; i < b.N; i++ {
-		ptrUsecase(data)
+		Pointer()
 	}
 }
 
 func BenchmarkPointerAdapter(b *testing.B) {
-	data := make([]*Person, DATA_SIZE)
-	for i := range data {
-		data[i] = &Person{
-			Name:  fmt.Sprintf("test-%d", i),
-			Age:   -1,
-			Email: "test@example.com",
-		}
-	}
 	for i := 0; i < b.N; i++ {
-		ptrAdapter(data)
+		ptrAdapter()
+	}
+}
+
+func BenchmarkPointerUsecase(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		ptrUsecase()
+	}
+}
+
+func BenchmarkPointerHandler(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		ptrHandler(ptrData)
 	}
 }
 
 func TestPointer(t *testing.T) {
-	input := make([]*InputPerson, DATA_SIZE)
-	for i := range input {
-		input[i] = &InputPerson{
-			Name:  fmt.Sprintf("input-%d", i),
-			Age:   -1,
-			Email: "test@example.com",
-		}
-	}
-	res := Pointer(input)
+	res := Pointer()
 	for i, item := range res {
-		expected := ProtoPerson{
-			Name:  fmt.Sprintf("proto-adapter-usecase-domain-input-%d", i),
-			Age:   -1,
-			Email: "test@example.com",
-		}
-		if *item != expected {
-			t.Errorf("Expected %+v, got %+v", expected, *item)
+		if item.Name != fmt.Sprintf("proto-usecase-%d", i) {
+			t.Errorf("Expected %s, got %s", fmt.Sprintf("proto-usecase-%d", i), item.Name)
 		}
 	}
+	t.Error("TestPointer")
 }
